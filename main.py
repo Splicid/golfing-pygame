@@ -1,24 +1,31 @@
-import gym
-import numpy as np
+# Example file showing a circle moving on screen
+import pygame
 
-env = gym.make('CartPole-v1', render_mode="human")
+# pygame setup
+pygame.init()
+screen = pygame.display.set_mode((1280, 720))
+clock = pygame.time.Clock()
+running = True
+dt = 0
 
-state = env.reset()
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
-for _ in range(1000):
-    action = env.action_space.sample()
+while running:
     
-    result = env.step(action)
-    
-    if len(result) == 5:
-        state, reward, terminated, truncated, info = result
-        done = terminated or truncated
-    else:
-        state, reward, done, info = result
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-    env.render()
+    screen.fill("black")
 
-    if done:
-        state = env.reset()
+    pygame.draw.circle(screen, "red", player_pos, 40)
+    mouse_pos = pygame.mouse.get_pos()
 
-env.close()
+    pygame.display.flip()
+
+    # limits FPS to 60
+    # dt is delta time in seconds since last frame, used for framerate-
+    # independent physics.
+    dt = clock.tick(120) / 1000
+
+pygame.quit()
