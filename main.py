@@ -1,31 +1,50 @@
 # Example file showing a circle moving on screen
 import pygame
+import sys
 
-# pygame setup
-pygame.init()
-screen = pygame.display.set_mode((1280, 720))
-clock = pygame.time.Clock()
-running = True
-dt = 0
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+BG_COLOR = (0, 0, 0)  
 
-while running:
+class draw():
+    def __init__(self) -> None:
+        pygame.init()
+
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        pygame.display.set_caption("Drawing Game")
+
+        self.clock = pygame.time.Clock()
+
+        self.running = True
+    def run(self):
+        while self.running:
+            self.handle_events()
+            self.update()
+            self.draw()
+            self.clock.tick(120)  
+
+        pygame.quit()
+        sys.exit()
+
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.running = False
+
+    def update(self):
+        pass
+
+    def draw(self):
+        self.screen.fill(BG_COLOR)
+
+        pygame.display.flip()
     
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
 
-    screen.fill("black")
 
-    pygame.draw.circle(screen, "red", player_pos, 40)
-    mouse_pos = pygame.mouse.get_pos()
-
-    pygame.display.flip()
-
-    # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate-
-    # independent physics.
-    dt = clock.tick(120) / 1000
-
-pygame.quit()
+if __name__ == "__main__":
+    game = draw()
+    game.run()
