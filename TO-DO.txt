@@ -1,3 +1,6 @@
 Re-using this project
 
 Creating a drawing program with save feature.
+- Work on dynamic layout 
+    - resizable window - DONE
+    - Setup screen for drawing - In Progress
