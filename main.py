@@ -27,7 +27,6 @@ class Draw:
                                                 container=self.ui
                                                 )
         
-
     def run(self):
         self.layout()
         while self.running:
@@ -47,10 +46,12 @@ class Draw:
                 if event.key == pygame.K_ESCAPE:
                     #self.running = False
                     self.manager.set_visual_debug_mode(True)
+            # Checks if user resizes screen        
             elif event.type == pygame.VIDEORESIZE:
                 self.SCREEN_WIDTH, self.SCREEN_HEIGHT = event.size
                 self.manager.set_window_resolution((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
                 self.ui.set_dimensions((160, self.SCREEN_HEIGHT))
+            # Checks if button was pressed
             elif event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self.hello_button:
                     print('Clicked')
